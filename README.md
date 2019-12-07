@@ -1,5 +1,3 @@
-(I know this script isn't working/finished :( sorry. I've been transitioning jobs and my old job overworked me during my last few weeks, but I've finally switched over to my new job and will finally be able to put in the time/energy into this class)
-
 /////////////
 
 This is a timed 5 question quiz that will display your highscore afterwards.

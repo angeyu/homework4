@@ -3,24 +3,30 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Brain Quiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" text="text/css" href="style.css">
+
+
 </head>
 
 <body>
     <div>
-        <div class="highscores">
+        <div id="highscores">
             <a href="highscores.html">Highscores</a>
-            <div id="timer">Time: 0</div>
+            <div id="timer">Time: </div>
+            <div id="userscore">Score: </div>
         </div>
 
-        <div class="container">
-            <div class="thequiz">
-                <h1 id="title">Neuroscience 101 Quiz</h1>
-
-                <p id="quizinfo">Answer 5 neuro questions in 100 seconds!!!!! Extra time that is left is added to your score.</p>
-
-                <button type="button" id="quizstart" class="btn btn-primary btn-sm">Start the quiz!!</button>
+        <div class="container" >
+            <div class="jumbotron thequiz" id="content">
+                    <h1 class="display-4">Neuroscience 101 Quiz</h1>
+                    <br>
+                    <p class="lead" id= "quizbody">Answer 5 questions in 150 seconds. A correct answer gives you 5 points, and a incorrect answer deducts 1 point. Extra time that is left is added to your score.</p>
+                    <hr class="my-4">
+                    <p id = "subtext">Click the button below to start the timed quiz.</p>
+                    <a class="btn btn-primary btn-lg" href="#" id="startquiz" role="button">Start Quiz</a>
             </div>
         </div>
     </div>

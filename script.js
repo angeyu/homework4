@@ -1,140 +1,133 @@
 // quiz content
-var quizquestions = 
-    
-    [
-
+var questions = 
+[
     {
       question: "What is the resting potential of a neuron?",
       choices: ["-70 mV", "-60 mV", "0 mV", "70 mV"],
       answer: "-70 mV"
     },
-
     {
       question: "Which lobe of the brain is primarily responsible for our ability to see?",
-      choices: ["occipital lobe", "temporal lobe", "frontal lobe", "parietal lobe"],
+      choices: ["temporal lobe", "occipital lobe", "frontal lobe", "parietal lobe"],
       answer: "occipital lobe"
     }, 
-
    { 
      question: "What is the basic sampling unit of an fMRI imaging study?",
      choices: ["cubic", "pixel", "square", "voxel"],
      answer: "voxel"
     },
-
     { 
       question: "Which of the following is not considered a part of the limbic system?",
       choices: ["amygdala", "globus pallidus", "hippocampus", "cingulate gyrus"],
       answer: "globus pallidus"
      },
-
      { 
       question: "The peripheral nervous system is derived from what embryonic structure?",
       choices: ["neural tube", "neural crest", "diencephelon", "telencephelon"],
       answer: "neural crest"
      },
-
-    { 
-      question: " ",
-      choices: ["you are done!!!!!!"],
-      answer: " "
-     }
-
+     { 
+      question: "What can the nerve impulse also be called?",
+      choices: ["multipolar", "refractory energy burst", "negative after-image", "action potential"],
+      answer: "action potential"
+     },
+     { 
+      question: "What is the main function of the myelin sheath?",
+      choices: ["protective coating for nerve axons", "block reception of acetylcholine", "affect speed of nerve impulses", "cushion the brain"],
+      answer: "affect speed of nerve impulses"
+     },
   ]
 
-//html id declare
-
-var quiztitle = document.querySelector("#highscores");
-var timersign = document.querySelector("#timer");
-var container = document.querySelector("#container");
-var quizcontainer = document.querySelector("#thequiz");
-var quiztitle = document.querySelector("#title");
-var quizinfo = document.querySelector("#quizinfo");
-var takequizbutton = document.querySelector("#quizstart");
-
-var answer01 = document.querySelectorAll(".answer");
-
-var time = "100";
-var questiontracker = "0";
-var score = "0";
+//connect html elements here
+var highscores = document.querySelector("#highscores");
+var timer = document.querySelector("#timer");
+var quizcontent = document.querySelector("#content");
+var quizbody = document.querySelector("#quizbody");
+var subtext = document.querySelector("#subtext");
+var userscore = document.querySelector("#userscore");
+//button to take quiz
+var takequiz = document.querySelector("#startquiz");
+var time = "150";
+var ii = "0";
+var score = 0;
 var highscorestracker = ""
 
-//timer
-
-if (time >= 0) 
-{
-
-    time--;
-}
-
-else 
-{
-    clearInterval(time);
-    document.getElementById("timer").innerHTML = "hello the time is up!!!!";
-}
-
-document.getElementById("timer").innerHTML = "Timer: " + time;
 
 //take the quiz
-takequizbutton.addEventListener("click", takequizbutton);
+takequiz.addEventListener("click", start);
 
-function takequiz() {
-
+function start() {
+    var userchoice = questions[ii].choices
     document.getElementById("timer").innerHTML = "Timer: " + time;
-    interval = setInterval(countDown, 1000)
+    interval = setInterval(countDown, 1000);
+    quizbody.textContent = questions[ii].question;
+    takequiz.parentNode.removeChild(takequiz);
+    subtext.textContent = " ";
 
-    var quizchoice = quizquestions[questiontracker].choices
 
-    quiztitle.textContent = quizquestions[questiontracker].title;
-
-    takequizbutton.parentNode.removeChild(takequizbutton);
-
-    quiz_instr.textContent = " ";
-
-    for (i = 0; i < quizchoice.length; i ++) 
+//make some bottons 
+    for (i = 0; i < userchoice.length; i++) 
     {
     var button01 = document.createElement("button");
     var br = document.createElement("br");
     var hr = document.createElement("hr");
-    button01.setAttribute("class", 
-    "answer");
-    button01.innterHTML = quizchoice[i];
-    quizcontainer.appendChild(button01);
-    quizcontainer.appendChild(br);
-    quizcontainer.appendChild(hr);
+    button01.setAttribute("class","answer");
+    button01.innerHTML = userchoice[i];
+    quizcontent.appendChild(button01);
+    quizcontent.appendChild(br);
+    quizcontent.appendChild(hr);
 
-    if (quizchoice[i] === quizquestions[questiontracker].answer) 
-    {
-        button01.setAttribute("id", "correct_answer");
-        button01.addEventListener("click", correct_answer);
+        if (userchoice[i] === questions[ii].answer) 
+            {
+            button01.setAttribute("id", "correct");
+            button01.addEventListener("click", correct);
+            }
+        else 
+            {
+            button01.addEventListener("click", wrong);
+            }
+    }
+}
+
+function countDown() {
+
+    if (time >= 0) {
+        time--;
     }
     else {
-        button01.addEventListener("click", wrong_answer);
-         }
+        clearInterval(time);
+        document.getElementById("timer").innerHTML = "Your time is up";
     }
-  
+
+    document.getElementById("timer").innerHTML = "Timer: " + time;
 }
 
 //correct answer
 function correct() {
-    questiontracker++;
+    ii++;
+    quizbody.textContent = questions[ii].question;
+    subtext.textContent = "correct!!!!!!!!! :)))";
+    subtext.setAttribute("style", "color: green;");
+    quizcontent.appendChild(subtext);
+    score = score + 5;
+    userscore.textContent = "Score: " + score;
 
-    quiztitle.textContent = "correct!!!!!!!!!";
-    quiztitle.setAttribute("style", "color: green;");
-    quizcontainer.appendChild(quiztitle);
-
-    checker();
+    verify();
 }
 
 //wrong answer
 
 function wrong() {
-    questiontracker++;
+    ii++;
+    quizbody.textContent = questions[ii].question;
+    subtext.textContent = "wrong!! :(";
+    subtext.setAttribute("style", "color: red;");
+    quizcontent.appendChild(subtext);
+    score = score - 1;
+    userscore.textContent = "Score: " + score;
 
-    quiztitle.textContent = "wrong!! :(";
-    quizcontainer.setAttribute("style", "color: red;");
-    quizcontainer.appendChild(quiztitle);
 
-    checker();
+    verify();
 }
 
 function countDown() {
@@ -151,25 +144,36 @@ function countDown() {
     document.getElementById("timer").innerHTML = "Timer: " + time;
 }
 
-function checker() {
+function verify() {
 
-    var quizchoice = quizquestions[questiontracker].choices;
+    var userchoice = questions[ii].choices;
+    var answer = document.querySelectorAll(".answer");
 
-    var answer = document.querySelectorAll("")//.answer?
-
-    for (i = 0; i <answer.length; i++) {
-        answer[i].innerHTML = quizchoice[i];
-
+    for (i = 0; i <answer.length; i++) 
+    {
+        answer[i].innerHTML = userchoice[i];
     }
 
-    if (quizchoice[i] === quizquestions[questiontracker].answer) 
+    if (userchoice[i] === questions[ii].answer)
     {
         answer[i].removeEventListener("click", wrong);
         answer[i].removeAttribute("id");
         answer[i].setAttribute("id", "correct");
         answer[i].addEventListener("click", correct);
-
     }
 
+    else if (userchoice[i] === "finish") {
 
+        localStorage.setItem("finalscore", JSON.stringify(ended));
+        clearInterval(interval);
+        window.location.href = "highscore.html";
+    }
+
+    else {
+        answer[i].removeEventListener("click", correct);
+        answer[i].removeAttribute("id");
+        answer[i].removeAttribute("style");
+        answer[i].addEventListener("click", wrong);
+    }
 }
+
